@@ -1,4 +1,4 @@
 ---
 docker_ipv6_enabled: true
-docker_ipv6_cidr: '2001:780:250:9::/80'
-...
+docker_ipv6_cidr: "2001:780:250:9::/64"
+docker_ipv6_subnet_size: 80
