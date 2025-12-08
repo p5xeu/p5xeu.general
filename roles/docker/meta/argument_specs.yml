@@ -17,4 +17,10 @@ argument_specs:
         required: false
         description:
           - 'IPv6 cidr to use for new networks'
+      docker_ipv6_subnet_size:
+        type: 'int'
+        default: 80
+        required: false
+        description:
+          - 'Size of new IPv6 subnets'
 ...
