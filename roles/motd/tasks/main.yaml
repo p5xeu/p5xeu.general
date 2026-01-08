@@ -18,7 +18,7 @@
 
 - name: Template motd.sh to /etc/profile.d/motd.sh
   ansible.builtin.copy:
-    content: 'fastfetch'
+    content: 'fastfetch -c /etc/fastfetch/fastfetch.json'
     dest: '/etc/profile.d/motd.sh'
     mode: "0744"
 
