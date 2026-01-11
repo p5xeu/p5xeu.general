@@ -1,3 +1,3 @@
-# Ansible Collection - p5x.general
+# Ansible Collection - p5xeu.general
 
 Documentation for the collection.

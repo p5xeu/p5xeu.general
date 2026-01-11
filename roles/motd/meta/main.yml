@@ -5,7 +5,7 @@ galaxy_info:
   # company: p5x
 
   role_name: motd
-  namespace: p5x
+  namespace: p5xeu
 
   license: BSD-3-Clause
   min_ansible_version: '2.16'
