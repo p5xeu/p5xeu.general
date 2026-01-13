@@ -1,6 +1,8 @@
 ---
 - name: 'OS updates'
-  hosts: '{{target|default("all")}}'
+  hosts: '{{ target | default("all") }}'
+  remote_user: 'root'
+  gather_facts: true
   tasks:
     - name: 'Perform Host OS updates'
       ansible.builtin.include_role:
