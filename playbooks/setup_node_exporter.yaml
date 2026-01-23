@@ -1,0 +1,11 @@
+---
+- name: 'Install Node Exporter'
+  hosts: '{{ target | default("all") }}'
+  remote_user: 'root'
+  gather_facts: true
+  tasks:
+    - name: 'Install Node Exporter'
+      ansible.builtin.include_role:
+        name: 'prometheus.prometheus.node_exporter'
+      when: role_setup_node_exporter_enabled | default(true)
+...

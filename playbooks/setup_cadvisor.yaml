@@ -1,0 +1,11 @@
+---
+- name: 'Install cAdvisor'
+  hosts: '{{ target | default("all") }}'
+  remote_user: 'root'
+  gather_facts: true
+  tasks:
+    - name: 'Install cAdvisor'
+      ansible.builtin.include_role:
+        name: 'prometheus.prometheus.cadvisor'
+      when: role_setup_cadvisor_enabled | default(true)
+...
