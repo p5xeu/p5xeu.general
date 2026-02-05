@@ -1,4 +1,6 @@
 ---
+setup_docker_ipv4_cidr: "172.30.0.0/16"
+setup_docker_ipv6_subnet_size: 26
 setup_docker_ipv6_enabled: true
 setup_docker_ipv6_cidr: "2001:780:250:9::/64"
 setup_docker_ipv6_subnet_size: 80
