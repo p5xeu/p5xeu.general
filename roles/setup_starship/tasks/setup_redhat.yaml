@@ -1,4 +1,10 @@
 ---
+- name: 'Setup Starship corp repo'
+  community.general.copr:
+    name: 'atim/starship'
+  become: true
+  become_user: root
+
 - name: 'Install starship'
   ansible.builtin.package:
     name: 'starship'
@@ -18,12 +24,12 @@
   ansible.builtin.include_tasks:
     file: 'configure_zsh.yaml'
   vars:
-    setup_starship_zshrc_path: '/etc/zsh/zshrc'
+    setup_starship_zshrc_path: '/etc/zshrc'
     setup_starship_transient_prompt_path: '/opt/zsh-transient-prompt'
 
 - name: 'Configure Bash'
   ansible.builtin.include_tasks:
     file: 'configure_bash.yaml'
   vars:
-    setup_starship_bashrc_path: '/etc/bash.bashrc'
+    setup_starship_bashrc_path: '/etc/bashrc'
 ...

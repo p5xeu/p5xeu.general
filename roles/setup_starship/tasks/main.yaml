@@ -1,5 +1,5 @@
 ---
-- name: 'Setup on Mac'
+- name: 'Setup on Darwin (Mac)'
   ansible.builtin.include_tasks:
     file: 'setup_darwin.yaml'
   when: 'ansible_facts[''os_family''] == ''Darwin'''
@@ -8,4 +8,13 @@
   ansible.builtin.include_tasks:
     file: 'setup_debian.yaml'
   when: 'ansible_facts[''os_family''] == ''Debian'''
+
+- name: 'Setup on Red Hat'
+  ansible.builtin.include_tasks:
+    file: 'setup_redhat.yaml'
+  when: 'ansible_facts[''os_family''] == ''RedHat'''
+
+- name: 'Configure Starship'
+  ansible.builtin.include_tasks:
+    file: 'configure_starship.yaml'
 ...

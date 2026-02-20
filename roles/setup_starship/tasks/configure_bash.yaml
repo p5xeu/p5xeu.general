@@ -1,0 +1,10 @@
+---
+- name: 'Enable starship on bash'
+  ansible.builtin.blockinfile:
+    path: '{{ setup_starship_bashrc_path }}'
+    marker: '# {mark} ANSIBLE MANAGED BLOCK (p5xeu.general.setup_starship)'
+    block: |
+      eval "$(starship init bash)"
+  become: true
+  become_user: root
+...

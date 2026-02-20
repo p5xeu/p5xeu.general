@@ -14,58 +14,16 @@
     name: 'zsh-transient-prompt'
     state: 'present'
 
-- name: 'Enable starship on zsh'
-  ansible.builtin.blockinfile:
-    path: /etc/zshrc
-    marker: '# {mark} ANSIBLE MANAGED BLOCK (p5xeu.general.setup_starship)'
-    block: |
-      source /opt/homebrew/share/zsh-transient-prompt/transient-prompt.zsh-theme
-      eval "$(starship init zsh)"
-      # Current Left Prompt
-      TRANSIENT_PROMPT_PROMPT='$(starship prompt --terminal-width="$COLUMNS" --keymap="${KEYMAP:-}" --status="$STARSHIP_CMD_STATUS" --pipestatus="${STARSHIP_PIPE_STATUS[*]}" --cmd-duration="${STARSHIP_DURATION:-}" --jobs="$STARSHIP_JOBS_COUNT")'
-      # Current Right Prompt
-      TRANSIENT_PROMPT_RPROMPT='$(starship prompt --right --terminal-width="$COLUMNS" --keymap="${KEYMAP:-}" --status="$STARSHIP_CMD_STATUS" --pipestatus="${STARSHIP_PIPE_STATUS[*]}" --cmd-duration="${STARSHIP_DURATION:-}" --jobs="$STARSHIP_JOBS_COUNT")'
-      # Transient prompt
-      TRANSIENT_PROMPT_TRANSIENT_PROMPT='$(starship module character)'
-      # Path to starship-config
-      export STARSHIP_CONFIG='/etc/starship/starship.toml'
-      # Configure History
-      HISTSIZE=5000
-      SAVEHIST=5000
-      HISTFILE=~/.zsh_history
-      # Activate autocomplete
-      autoload -U compinit; compinit
-      # Configure Autocomplete
-      zstyle ':completion:*' menu select
-  become: true
-  become_user: root
+- name: 'Configure ZSH'
+  ansible.builtin.include_tasks:
+    file: 'configure_zsh.yaml'
+  vars:
+    setup_starship_zshrc_path: '/etc/zshrc'
+    setup_starship_transient_prompt_path: '/opt/homebrew/share/zsh-transient-prompt'
 
-- name: 'Enable starship on bash'
-  ansible.builtin.blockinfile:
-    path: /etc/bashrc
-    marker: '# {mark} ANSIBLE MANAGED BLOCK (p5xeu.general.setup_starship)'
-    block: |
-      eval "$(starship init bash)"
-  become: true
-  become_user: root
-
-- name: 'Create Config directory'
-  ansible.builtin.file:
-    state: 'directory'
-    path: '/etc/starship/'
-    owner: 'root'
-    group: 'wheel'
-    mode: '0755'
-  become: true
-  become_user: root
-
-- name: 'Template Config'
-  ansible.builtin.template:
-    src: 'starship.toml.j2'
-    dest: '/etc/starship/starship.toml'
-    owner: 'root'
-    group: 'wheel'
-    mode: '0644'
-  become: true
-  become_user: root
+- name: 'Configure Bash'
+  ansible.builtin.include_tasks:
+    file: 'configure_bash.yaml'
+  vars:
+    setup_starship_bashrc_path: '/etc/bashrc'
 ...

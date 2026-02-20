@@ -1,0 +1,14 @@
+---
+- name: 'Enable starship on zsh'
+  ansible.builtin.blockinfile:
+    path: '{{ setup_starship_zshrc_path }}'
+    marker: '# {mark} ANSIBLE MANAGED BLOCK (p5xeu.general.setup_starship)'
+    block: |
+      source {{ setup_starship_transient_prompt_path }}/transient-prompt.zsh-theme
+
+      {{ lookup('template', 'zsh/rc.j2') }}
+
+      {{ lookup('template', 'zsh/keybindings.j2') }}
+  become: true
+  become_user: root
+...
