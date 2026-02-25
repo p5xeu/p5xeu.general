@@ -20,16 +20,45 @@
     single_branch: true
     version: main
 
-- name: 'Configure ZSH'
-  ansible.builtin.include_tasks:
-    file: 'configure_zsh.yaml'
-  vars:
-    setup_starship_zshrc_path: '/etc/zshrc'
-    setup_starship_transient_prompt_path: '/opt/zsh-transient-prompt'
+- name: 'Enable starship on zsh'
+  ansible.builtin.blockinfile:
+    path: '/etc/zshrc'
+    marker: '# {mark} ANSIBLE MANAGED BLOCK (p5xeu.general.setup_starship)'
+    block: |
+      source //opt/zsh-transient-prompt/transient-prompt.zsh-theme
 
-- name: 'Configure Bash'
-  ansible.builtin.include_tasks:
-    file: 'configure_bash.yaml'
-  vars:
-    setup_starship_bashrc_path: '/etc/bashrc'
+      {{ lookup('template', 'zsh/rc.j2') }}
+
+      {{ lookup('template', 'zsh/keybindings.j2') }}
+  become: true
+  become_user: root
+
+- name: 'Enable starship on bash'
+  ansible.builtin.blockinfile:
+    path: '/etc/bashrc'
+    marker: '# {mark} ANSIBLE MANAGED BLOCK (p5xeu.general.setup_starship)'
+    block: |
+      eval "$(starship init bash)"
+  become: true
+  become_user: root
+
+- name: 'Create Config directory'
+  ansible.builtin.file:
+    state: 'directory'
+    path: '/etc/starship/'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+  become: true
+  become_user: root
+
+- name: 'Template Config'
+  ansible.builtin.template:
+    src: 'starship.toml.j2'
+    dest: '/etc/starship/starship.toml'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  become: true
+  become_user: root
 ...
