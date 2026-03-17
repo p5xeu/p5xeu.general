@@ -14,7 +14,7 @@
   ansible.builtin.unarchive:
     src: "{{ setup_cli_tools_oc_url }}"
     dest: /usr/local/bin
-    remote_src: yes
+    remote_src: true
     mode: '0755'
     include:
       - 'oc'

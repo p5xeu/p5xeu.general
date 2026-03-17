@@ -2,7 +2,7 @@
 - name: Install generic packages
   ansible.builtin.include_tasks:
     file: 'generic.yaml'
-  when: 
+  when:
     - setup_cli_tools_generic_packages is defined
     - setup_cli_tools_generic_packages | length > 0
 
