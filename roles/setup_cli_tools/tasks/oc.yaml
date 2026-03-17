@@ -1,12 +1,12 @@
 ---
 # You need to install gnu-tar (brew install gnu-tar)
 - name: Build URL for Darwin (Mac)
-  ansible.builtin.set_facts:
+  ansible.builtin.set_fact:
     setup_cli_tools_oc_url: 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ setup_cli_tools_oc_version }}/openshift-client-mac-arm64.tar.gz'
   when: 'ansible_facts[''os_family''] == ''Darwin'''
 
 - name: Build URL for Debian
-  ansible.builtin.set_facts:
+  ansible.builtin.set_fact:
     setup_cli_tools_oc_url: 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ setup_cli_tools_oc_version }}/openshift-client-linux.tar.gz'
   when: 'ansible_facts[''os_family''] == ''Debian'''
 

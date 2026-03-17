@@ -1,12 +1,12 @@
 ---
 # You need to install gnu-tar (brew install gnu-tar)
 - name: Build URL for Darwin (Mac)
-  ansible.builtin.set_facts:
+  ansible.builtin.set_fact:
     setup_cli_tools_helm_url: 'https://get.helm.sh/helm-{{ setup_cli_tools_helm_version }}-darwin-arm64.tar.gz'
   when: 'ansible_facts[''os_family''] == ''Darwin'''
 
 - name: Build URL for Debian
-  ansible.builtin.set_facts:
+  ansible.builtin.set_fact:
     setup_cli_tools_helm_url: 'https://get.helm.sh/helm-{{ setup_cli_tools_helm_version }}-linux-amd64.tar.gz'
   when: 'ansible_facts[''os_family''] == ''Debian'''
 
