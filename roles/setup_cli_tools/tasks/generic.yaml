@@ -6,7 +6,7 @@
   when: 'ansible_facts[''os_family''] == ''Darwin'''
 
 - name: Install Generic Packages on Debian
-  ansible.builtin.packages:
+  ansible.builtin.package:
     name: '{{ setup_cli_tools_generic_packages }}'
     state: present
   when: 'ansible_facts[''os_family''] == ''Debian'''
