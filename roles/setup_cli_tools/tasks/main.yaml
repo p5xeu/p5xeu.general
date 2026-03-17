@@ -1,0 +1,28 @@
+---
+- name: Install generic packages
+  ansible.builtin.include_tasks:
+    file: 'generic.yaml'
+  when: 
+    - setup_cli_tools_generic_packages is defined
+    - setup_cli_tools_generic_packages | length > 0
+
+- name: Install oc
+  ansible.builtin.include_tasks:
+    file: 'oc.yaml'
+  when: setup_cli_tools_oc_enabled
+
+- name: Install kubectl
+  ansible.builtin.include_tasks:
+    file: 'kubectl.yaml'
+  when: setup_cli_tools_kubectl_enabled
+
+- name: Install helm
+  ansible.builtin.include_tasks:
+    file: 'helm.yaml'
+  when: setup_cli_tools_helm_enabled
+
+- name: Install openshift-install
+  ansible.builtin.include_tasks:
+    file: 'openshift-install.yaml'
+  when: setup_cli_tools_openshift_install_enabled
+...

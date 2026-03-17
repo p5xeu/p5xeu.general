@@ -1,0 +1,13 @@
+---
+setup_cli_tools_oc_enabled: true
+setup_cli_tools_oc_version: 'stable'
+
+setup_cli_tools_kubectl_enabled: true
+setup_cli_tools_kubectl_version: '{{ lookup("ansible.builtin.url", "https://dl.k8s.io/release/stable.txt") }}'
+
+setup_cli_tools_helm_enabled: true
+setup_cli_tools_helm_version: 'v4.1.3'
+
+setup_cli_tools_openshift_install_enabled: false
+setup_cli_tools_openshift_install_version: 'stable'
+...

@@ -1,0 +1,11 @@
+---
+- name: 'Install CLI Tools'
+  hosts: '{{ target | default("all") }}'
+  remote_user: 'root'
+  gather_facts: true
+  tasks:
+    - name: 'Install CLI Tools'
+      ansible.builtin.include_role:
+        name: 'p5xeu.general.setup_cli_tools'
+      when: role_setup_cli_tools_enabled | default(true)
+...
