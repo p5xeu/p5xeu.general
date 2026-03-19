@@ -2,7 +2,7 @@
 # You need to install gnu-tar (brew install gnu-tar)
 - name: Build URL for Darwin (Mac)
   ansible.builtin.set_fact:
-    setup_cli_tools_helm_url: 'https://get.helm.sh/helm-{{ setup_cli_tools_helm_version }}-darwin-arm64.tar.gz'
+    setup_cli_tools__helm_url: 'https://get.helm.sh/helm-{{ setup_cli_tools_helm_version }}-darwin-arm64.tar.gz'
     setup_cli_tools_helm_folder: 'darwin-arm64'
   when: 'ansible_facts[''os_family''] == ''Darwin'''
 
@@ -10,7 +10,7 @@
   ansible.builtin.set_fact:
     setup_cli_tools_helm_url: 'https://get.helm.sh/helm-{{ setup_cli_tools_helm_version }}-linux-amd64.tar.gz'
     setup_cli_tools_helm_folder: 'linux-amd64'
-  when: 'ansible_facts[''os_family''] == ''Debian'''
+  when: 'ansible_facts[''os_family''] in [''Debian'', ''RedHat'' ]'
 
 - name: Download and unarchive helm
   ansible.builtin.unarchive:
@@ -20,4 +20,24 @@
     mode: '0755'
     include:
       - '{{ setup_cli_tools_helm_folder }}/helm'
+
+- name: Get ZSH Autocomplete
+  ansible.builtin.command:
+    cmd: helm completion zsh
+  register: setup_cli_tools_helm_zsh_completion
+
+- name: Create ZSH autocomple file
+  ansible.builtin.copy:
+    dest: '/usr/share/zsh/vendor-completions/_helm'
+    content: '{{ setup_cli_tools_helm_zsh_completion.stdout }}'
+
+- name: Get Bash Autocomplete
+  ansible.builtin.command:
+    cmd: helm completion bash
+  register: setup_cli_tools_helm_bash_completion
+
+- name: Create Bash autocomple file
+  ansible.builtin.copy:
+    dest: '/etc/bash_completion.d/helm_completion'
+    content: '{{ setup_cli_tools_helm_bash_completion.stdout }}'
 ...

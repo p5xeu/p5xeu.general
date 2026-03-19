@@ -6,12 +6,32 @@
 
 - name: Build URL for Debian
   ansible.builtin.set_fact:
-    setup_cli_tools_kubectl_url: 'https://dl.k8s.io/release/{{ setup_cli_tools_kubectl_version }}/bin/darwin/amd64/kubectl'
-  when: 'ansible_facts[''os_family''] == ''Debian'''
+    setup_cli_tools_kubectl_url: 'https://dl.k8s.io/release/{{ setup_cli_tools_kubectl_version }}/bin/linux/amd64/kubectl'
+  when: 'ansible_facts[''os_family''] in [''Debian'', ''RedHat'' ]'
 
 - name: Download kubectl
   ansible.builtin.get_url:
     url: '{{ setup_cli_tools_kubectl_url }}'
     dest: /usr/local/bin/kubectl
     mode: '0755'
+
+- name: Get ZSH Autocomplete
+  ansible.builtin.command:
+    cmd: kubectl completion zsh
+  register: setup_cli_tools_kubectl_zsh_completion
+
+- name: Create ZSH autocomple file
+  ansible.builtin.copy:
+    dest: '/usr/share/zsh/vendor-completions/_kubectl'
+    content: '{{ setup_cli_tools_kubectl_zsh_completion.stdout }}'
+
+- name: Get Bash Autocomplete
+  ansible.builtin.command:
+    cmd: kubectl completion bash
+  register: setup_cli_tools_kubectl_bash_completion
+
+- name: Create Bash autocomple file
+  ansible.builtin.copy:
+    dest: '/etc/bash_completion.d/kubectl_completion'
+    content: '{{ setup_cli_tools_kubectl_bash_completion.stdout }}'
 ...

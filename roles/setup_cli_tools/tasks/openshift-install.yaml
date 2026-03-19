@@ -8,7 +8,7 @@
 - name: Build URL for Debian
   ansible.builtin.set_fact:
     setup_cli_tools_openshift_install_url: 'https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp/{{ setup_cli_tools_openshift_install_version }}/openshift-install-linux.tar.gz'
-  when: 'ansible_facts[''os_family''] == ''Debian'''
+  when: 'ansible_facts[''os_family''] in [''Debian'', ''RedHat'' ]'
 
 - name: Download and unarchive openshift-install
   ansible.builtin.unarchive:
@@ -18,4 +18,24 @@
     mode: '0755'
     include:
       - 'openshift-install'
+
+- name: Get ZSH Autocomplete
+  ansible.builtin.command:
+    cmd: openshift-install completion zsh
+  register: setup_cli_tools_openshift_install_zsh_completion
+
+- name: Create ZSH autocomple file
+  ansible.builtin.copy:
+    dest: '/usr/share/zsh/vendor-completions/_openshift-install'
+    content: '{{ setup_cli_tools_openshift_install_zsh_completion.stdout }}'
+
+- name: Get Bash Autocomplete
+  ansible.builtin.command:
+    cmd: openshift-install completion bash
+  register: setup_cli_tools_openshift_install_bash_completion
+
+- name: Create Bash autocomple file
+  ansible.builtin.copy:
+    dest: '/etc/bash_completion.d/openshift-install_completion'
+    content: '{{ setup_cli_tools_openshift_install_bash_completion.stdout }}'
 ...
