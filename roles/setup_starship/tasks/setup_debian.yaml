@@ -19,11 +19,11 @@
     path: '/etc/zsh/zshrc'
     marker: '# {mark} ANSIBLE MANAGED BLOCK (p5xeu.general.setup_starship)'
     block: |
-      source //opt/zsh-transient-prompt/transient-prompt.zsh-theme
-
       {{ lookup('template', 'zsh/rc.j2') }}
 
       {{ lookup('template', 'zsh/keybindings.j2') }}
+
+      source /opt/zsh-transient-prompt/transient-prompt.zsh-theme
   become: true
   become_user: root
 
