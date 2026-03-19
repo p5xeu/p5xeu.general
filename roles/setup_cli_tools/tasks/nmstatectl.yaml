@@ -1,0 +1,21 @@
+---
+# You need to install gnu-tar (brew install gnu-tar)
+- name: Build URL for Darwin (Mac)
+  ansible.builtin.set_fact:
+    setup_cli_tools_nmstatectl_install_url: 'https://github.com/nmstate/nmstate/releases/download/{{ setup_cli_tools_nmstatectl_version }}/nmstatectl-macos-aarch64.zip'
+  when: 'ansible_facts[''os_family''] == ''Darwin'''
+
+- name: Build URL for Debian
+  ansible.builtin.set_fact:
+    setup_cli_tools_nmstatectl_install_url: 'https://github.com/nmstate/nmstate/releases/download/{{ setup_cli_tools_nmstatectl_version }}/nmstatectl-linux-x64.zip'
+  when: 'ansible_facts[''os_family''] == ''Debian'''
+
+- name: Download and unarchive nmstatectl
+  ansible.builtin.unarchive:
+    src: "{{ setup_cli_tools_openshift_install_url }}"
+    dest: /usr/local/bin
+    remote_src: true
+    mode: '0755'
+    include:
+      - 'nmstatectl'
+...
