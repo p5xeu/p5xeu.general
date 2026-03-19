@@ -12,7 +12,7 @@
 
 - name: Download and unarchive nmstatectl
   ansible.builtin.unarchive:
-    src: "{{ setup_cli_tools_openshift_install_url }}"
+    src: "{{ setup_cli_tools_nmstatectl_install_url }}"
     dest: /usr/local/bin
     remote_src: true
     mode: '0755'
