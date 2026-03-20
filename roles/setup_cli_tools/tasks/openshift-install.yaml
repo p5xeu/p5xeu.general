@@ -22,20 +22,24 @@
 - name: Get ZSH Autocomplete
   ansible.builtin.command:
     cmd: openshift-install completion zsh
+  changed_when: false
   register: setup_cli_tools_openshift_install_zsh_completion
 
 - name: Create ZSH autocomple file
   ansible.builtin.copy:
     dest: '/usr/share/zsh/vendor-completions/_openshift-install'
     content: '{{ setup_cli_tools_openshift_install_zsh_completion.stdout }}'
+    mode: '0755'
 
 - name: Get Bash Autocomplete
   ansible.builtin.command:
     cmd: openshift-install completion bash
+  changed_when: false
   register: setup_cli_tools_openshift_install_bash_completion
 
 - name: Create Bash autocomple file
   ansible.builtin.copy:
     dest: '/etc/bash_completion.d/openshift-install_completion'
     content: '{{ setup_cli_tools_openshift_install_bash_completion.stdout }}'
+    mode: '0755'
 ...

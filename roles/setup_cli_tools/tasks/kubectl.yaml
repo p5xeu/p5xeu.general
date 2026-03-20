@@ -18,20 +18,24 @@
 - name: Get ZSH Autocomplete
   ansible.builtin.command:
     cmd: kubectl completion zsh
+  changed_when: false
   register: setup_cli_tools_kubectl_zsh_completion
 
 - name: Create ZSH autocomple file
   ansible.builtin.copy:
     dest: '/usr/share/zsh/vendor-completions/_kubectl'
     content: '{{ setup_cli_tools_kubectl_zsh_completion.stdout }}'
+    mode: '0755'
 
 - name: Get Bash Autocomplete
   ansible.builtin.command:
     cmd: kubectl completion bash
+  changed_when: false
   register: setup_cli_tools_kubectl_bash_completion
 
 - name: Create Bash autocomple file
   ansible.builtin.copy:
     dest: '/etc/bash_completion.d/kubectl_completion'
     content: '{{ setup_cli_tools_kubectl_bash_completion.stdout }}'
+    mode: '0755'
 ...

@@ -22,20 +22,24 @@
 - name: Get ZSH Autocomplete
   ansible.builtin.command:
     cmd: oc completion zsh
+  changed_when: false
   register: setup_cli_tools_oc_zsh_completion
 
 - name: Create ZSH autocomple file
   ansible.builtin.copy:
     dest: '/usr/share/zsh/vendor-completions/_oc'
     content: '{{ setup_cli_tools_oc_zsh_completion.stdout }}'
+    mode: '0755'
 
 - name: Get Bash Autocomplete
   ansible.builtin.command:
     cmd: oc completion bash
+  changed_when: false
   register: setup_cli_tools_oc_bash_completion
 
 - name: Create Bash autocomple file
   ansible.builtin.copy:
     dest: '/etc/bash_completion.d/oc_completion'
     content: '{{ setup_cli_tools_oc_bash_completion.stdout }}'
+    mode: '0755'
 ...
