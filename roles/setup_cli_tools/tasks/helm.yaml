@@ -24,7 +24,7 @@
 - name: Copy Helm
   ansible.builtin.copy:
     src: '/tmp/{{ setup_cli_tools_helm_folder }}/helm'
-    dest: '/usr/local/bin/kubectl'
+    dest: '/usr/local/bin/helm'
     remote_src: true
     mode: '0755'
 
