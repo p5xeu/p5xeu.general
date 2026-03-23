@@ -15,11 +15,18 @@
 - name: Download and unarchive helm
   ansible.builtin.unarchive:
     src: "{{ setup_cli_tools_helm_url }}"
-    dest: /usr/local/bin
+    dest: /tmp/helm
     remote_src: true
     mode: '0755'
     include:
       - '{{ setup_cli_tools_helm_folder }}/helm'
+
+- name: Copy Helm
+  ansible.builtin.copy:
+    src: '/tmp/helm/{{ setup_cli_tools_helm_folder }}/helm'
+    dest: '/usr/local/bin/kubectl'
+    remote_src: true
+    mode: '0755'
 
 - name: Get ZSH Autocomplete
   ansible.builtin.command:
