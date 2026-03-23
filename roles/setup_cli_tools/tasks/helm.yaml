@@ -15,7 +15,7 @@
 - name: Download and unarchive helm
   ansible.builtin.unarchive:
     src: "{{ setup_cli_tools_helm_url }}"
-    dest: /tmp/helm
+    dest: /tmp
     remote_src: true
     mode: '0755'
     include:
@@ -23,7 +23,7 @@
 
 - name: Copy Helm
   ansible.builtin.copy:
-    src: '/tmp/helm/{{ setup_cli_tools_helm_folder }}/helm'
+    src: '/tmp/{{ setup_cli_tools_helm_folder }}/helm'
     dest: '/usr/local/bin/kubectl'
     remote_src: true
     mode: '0755'
