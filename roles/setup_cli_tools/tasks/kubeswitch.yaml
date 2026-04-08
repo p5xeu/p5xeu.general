@@ -2,17 +2,17 @@
 # You need to install gnu-tar (brew install gnu-tar)
 - name: Build URL for Darwin (Mac)
   ansible.builtin.set_fact:
-    setup_cli_tools_kubeswitch_install_url: 'https://github.com/danielfoehrKn/kubeswitch/releases/download/{{ setup_cli_tools_kubeswitcher_version }}/switcher_darwin_arm64'
+    setup_cli_tools_kubeswitch_install_url: 'https://github.com/danielfoehrKn/kubeswitch/releases/download/{{ setup_cli_tools_kubeswitch_version }}/switcher_darwin_arm64'
   when: 'ansible_facts[''os_family''] == ''Darwin'''
 
 - name: Build URL for Debian
   ansible.builtin.set_fact:
-    setup_cli_tools_kubeswitch_install_url: 'https://github.com/danielfoehrKn/kubeswitch/releases/download/{{ setup_cli_tools_kubeswitcher_version }}/switcher_linux_amd64'
+    setup_cli_tools_kubeswitch_install_url: 'https://github.com/danielfoehrKn/kubeswitch/releases/download/{{ setup_cli_tools_kubeswitch_version }}/switcher_linux_amd64'
   when: 'ansible_facts[''os_family''] == ''Debian'''
 
 - name: Download kubeswitch
   ansible.builtin.get_url:
-    url: '{{ setup_cli_tools_kubeswitcher_install_url }}'
+    url: '{{ setup_cli_tools_kubeswitch_install_url }}'
     dest: /usr/local/bin/switcher
     mode: '0755'
 
