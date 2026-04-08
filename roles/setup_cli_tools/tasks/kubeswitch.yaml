@@ -1,0 +1,42 @@
+---
+# You need to install gnu-tar (brew install gnu-tar)
+- name: Build URL for Darwin (Mac)
+  ansible.builtin.set_fact:
+    setup_cli_tools_kubeswitch_install_url: 'https://github.com/danielfoehrKn/kubeswitch/releases/download/{{ setup_cli_tools_kubeswitcher_version }}/switcher_darwin_arm64'
+  when: 'ansible_facts[''os_family''] == ''Darwin'''
+
+- name: Build URL for Debian
+  ansible.builtin.set_fact:
+    setup_cli_tools_kubeswitch_install_url: 'https://github.com/danielfoehrKn/kubeswitch/releases/download/{{ setup_cli_tools_kubeswitcher_version }}/switcher_linux_amd64'
+  when: 'ansible_facts[''os_family''] == ''Debian'''
+
+- name: Download kubeswitch
+  ansible.builtin.get_url:
+    url: '{{ setup_cli_tools_kubeswitcher_install_url }}'
+    dest: /usr/local/bin/switcher
+    mode: '0755'
+
+- name: Get ZSH Autocomplete
+  ansible.builtin.command:
+    cmd: switcher completion zsh
+  changed_when: false
+  register: setup_cli_tools_kubeswitch_zsh_completion
+
+- name: Create ZSH autocomple file
+  ansible.builtin.copy:
+    dest: '/usr/share/zsh/vendor-completions/_switcher'
+    content: '{{ setup_cli_tools_kubeswitch_zsh_completion.stdout }}'
+    mode: '0755'
+
+- name: Get Bash Autocomplete
+  ansible.builtin.command:
+    cmd: switcher completion bash
+  changed_when: false
+  register: setup_cli_tools_kubeswitch_bash_completion
+
+- name: Create Bash autocomple file
+  ansible.builtin.copy:
+    dest: '/etc/bash_completion.d/switcher_completion'
+    content: '{{ setup_cli_tools_kubeswitch_bash_completion.stdout }}'
+    mode: '0755'
+...

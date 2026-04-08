@@ -13,4 +13,7 @@ setup_cli_tools_openshift_install_version: 'stable'
 
 setup_cli_tools_nmstatectl_enabled: false
 setup_cli_tools_nmstatectl_version: v2.2.55
+
+setup_cli_tools_kubeswitch_enabled: true
+setup_cli_tools_kubeswitch_version: 0.9.3
 ...
