@@ -39,4 +39,36 @@
     dest: '/etc/bash_completion.d/switcher_completion'
     content: '{{ setup_cli_tools_kubeswitch_bash_completion.stdout }}'
     mode: '0755'
+
+- name: 'Enable kubeswitcher on zsh (Mac)'
+  ansible.builtin.blockinfile:
+    path: '/etc/zshrc'
+    marker: '# {mark} ANSIBLE MANAGED BLOCK (p5xeu.general.setup_cli_tools kubeswitch)'
+    block: |
+      source <(switcher init zsh)
+  when: 'ansible_facts[''os_family''] == ''Darwin'''
+
+- name: 'Enable starship on bash (Mac)'
+  ansible.builtin.blockinfile:
+    path: '/etc/bashrc'
+    marker: '# {mark} ANSIBLE MANAGED BLOCK (p5xeu.general.setup_cli_tools kubeswitch)'
+    block: |
+      source <(switcher init bash)
+  when: 'ansible_facts[''os_family''] == ''Darwin'''
+
+- name: 'Enable kubeswitcher on zsh (Debian)'
+  ansible.builtin.blockinfile:
+    path: '/etc/zshrc'
+    marker: '# {mark} ANSIBLE MANAGED BLOCK (p5xeu.general.setup_cli_tools kubeswitch)'
+    block: |
+      source <(switcher init zsh)
+  when: 'ansible_facts[''os_family''] == ''Debian'''
+
+- name: 'Enable starship on bash (Debian)'
+  ansible.builtin.blockinfile:
+    path: '/etc/bashrc'
+    marker: '# {mark} ANSIBLE MANAGED BLOCK (p5xeu.general.setup_cli_tools kubeswitch)'
+    block: |
+      source <(switcher init bash)
+  when: 'ansible_facts[''os_family''] == ''Debian'''
 ...
