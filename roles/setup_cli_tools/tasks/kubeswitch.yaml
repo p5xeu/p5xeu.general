@@ -58,7 +58,7 @@
 
 - name: 'Enable kubeswitcher on zsh (Debian)'
   ansible.builtin.blockinfile:
-    path: '/etc/zshrc'
+    path: '/etc/zsh/zshrc'
     marker: '# {mark} ANSIBLE MANAGED BLOCK (p5xeu.general.setup_cli_tools kubeswitch)'
     block: |
       source <(switcher init zsh)
@@ -66,7 +66,7 @@
 
 - name: 'Enable starship on bash (Debian)'
   ansible.builtin.blockinfile:
-    path: '/etc/bashrc'
+    path: '/etc/bash.bashrc'
     marker: '# {mark} ANSIBLE MANAGED BLOCK (p5xeu.general.setup_cli_tools kubeswitch)'
     block: |
       source <(switcher init bash)
