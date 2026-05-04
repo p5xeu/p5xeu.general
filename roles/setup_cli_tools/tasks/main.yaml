@@ -35,4 +35,9 @@
   ansible.builtin.include_tasks:
     file: 'kubeswitch.yaml'
   when: setup_cli_tools_kubeswitch_enabled
+
+- name: Install virtctl
+  ansible.builtin.include_tasks:
+    file: 'virtctl.yaml'
+  when: setup_cli_tools_virtctl_enabled
 ...

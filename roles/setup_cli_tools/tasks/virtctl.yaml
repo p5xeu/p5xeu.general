@@ -1,0 +1,41 @@
+---
+- name: Build URL for Darwin (Mac)
+  ansible.builtin.set_fact:
+    setup_cli_tools_virtctl_url: 'https://github.com/kubevirt/kubevirt/releases/download/{{ setup_cli_tools_virtctl_version }}/virtctl-{{ setup_cli_tools_virtctl_version }}-darwin-arm64'
+  when: 'ansible_facts[''os_family''] == ''Darwin'''
+
+- name: Build URL for Debian
+  ansible.builtin.set_fact:
+    setup_cli_tools_virtctl_url: 'https://github.com/kubevirt/kubevirt/releases/download/{{ setup_cli_tools_virtctl_version }}/virtctl-{{ setup_cli_tools_virtctl_version }}-linux-amd64'
+  when: 'ansible_facts[''os_family''] in [''Debian'', ''RedHat'' ]'
+
+- name: Download virtctl
+  ansible.builtin.get_url:
+    url: '{{ setup_cli_tools_virtctl_url }}'
+    dest: /usr/local/bin/virtctl
+    mode: '0755'
+
+- name: Get ZSH Autocomplete
+  ansible.builtin.command:
+    cmd: virtctl completion zsh
+  changed_when: false
+  register: setup_cli_tools_virtctl_zsh_completion
+
+- name: Create ZSH autocomple file
+  ansible.builtin.copy:
+    dest: '/usr/share/zsh/vendor-completions/_virtctl'
+    content: '{{ setup_cli_tools_virtctl_zsh_completion.stdout }}'
+    mode: '0755'
+
+- name: Get Bash Autocomplete
+  ansible.builtin.command:
+    cmd: virtctl completion bash
+  changed_when: false
+  register: setup_cli_tools_virtctl_bash_completion
+
+- name: Create Bash autocomple file
+  ansible.builtin.copy:
+    dest: '/etc/bash_completion.d/virtctl_completion'
+    content: '{{ setup_cli_tools_virtctl_bash_completion.stdout }}'
+    mode: '0755'
+...
