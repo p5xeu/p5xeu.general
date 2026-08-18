@@ -3,6 +3,7 @@
   hosts: '{{ target | default("all") }}'
   remote_user: 'root'
   gather_facts: true
+  serial: '{{ ansible_serial | default(omit) }}'
   tasks:
     - name: 'Perform Host OS updates'
       ansible.builtin.include_role:
