@@ -41,7 +41,7 @@
     file: 'virtctl.yaml'
   when: setup_cli_tools_virtctl_enabled
 
-- name: Install virtctl
+- name: Install butane
   ansible.builtin.include_tasks:
     file: 'butane.yaml'
   when: setup_cli_tools_butane_enabled
