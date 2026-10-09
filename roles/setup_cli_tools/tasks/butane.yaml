@@ -1,0 +1,18 @@
+---
+# You need to install gnu-tar (brew install gnu-tar)
+- name: Build URL for Darwin (Mac)
+  ansible.builtin.set_fact:
+    setup_cli_tools_butane_install_url: 'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/butane/{{ setup_cli_tools_butane_version }}/butane'
+  when: 'ansible_facts[''os_family''] == ''Darwin'''
+
+- name: Build URL for Debian
+  ansible.builtin.set_fact:
+    setup_cli_tools_butane_install_url: 'https://mirror.openshift.com/pub/openshift-v4/amd64/clients/butane/{{ setup_cli_tools_butane_version }}/butane'
+  when: 'ansible_facts[''os_family''] == ''Debian'''
+
+- name: Download butane
+  ansible.builtin.get_url:
+    url: '{{ setup_cli_tools_butane_install_url }}'
+    dest: /usr/local/bin/butane
+    mode: '0755'
+...

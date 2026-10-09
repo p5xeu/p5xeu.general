@@ -19,4 +19,7 @@ setup_cli_tools_kubeswitch_version: 0.9.3
 
 setup_cli_tools_virtctl_enabled: false
 setup_cli_tools_virtctl_version: v1.7.3
+
+setup_cli_tools_butane_enabled: false
+setup_cli_tools_butane_version: latest
 ...
